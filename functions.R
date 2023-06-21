@@ -7,6 +7,8 @@ library(GenomicRanges)
 # load data
 
 RNA_data_df <- readRDS("./Data/ALL_avg_celltype_RNA.rds")
+RNA_data_df$GeneName <- row.names(RNA_data_df)
+
 Peak_data_df <- readRDS("./Data/ALL_avg_celltype_peaks.rds")
 Key_GRCh38_p13_df <- readRDS("./Data/Key.GRCh38.p13.rds")
 
@@ -34,7 +36,7 @@ ATAC_TPMmatrix <- as.data.frame(tpm3(Peak_data_df,width(AllPeaks.granges)))
 # Functions
 
 # subset data according to gene name or ensembl ID
-subset.RNA.FUN <- function(mydata=AH_EL_RNA_ALLREPS, geneName=NULL, ensemblID=NULL){
+subset.RNA.FUN <- function(mydata=RNA_data_df, geneName=NULL, ensemblID=NULL){
 
   if(!is.null(geneName) & !is.null(ensemblID)){
     return(subset(mydata, GeneName %in% geneName & EnsemblID == ensemblID))
@@ -53,10 +55,10 @@ subset.RNA.FUN <- function(mydata=AH_EL_RNA_ALLREPS, geneName=NULL, ensemblID=NU
 arrange.FUN <- function(mydata, geneName=NULL, ensemblID=NULL){
 
   mydata.subset <- subset.RNA.FUN(mydata=mydata, geneName = geneName, ensemblID=ensemblID)
-  mydata.subset <-  pivot_longer(mydata.subset, cols = colnames(mydata)[2:40])
+  mydata.subset <-  pivot_longer(mydata.subset, cols = colnames(mydata)[1:6])
 
-  mydata.subset <- cbind(mydata.subset,str_split(mydata.subset$name,pattern="_", simplify = T))
-  colnames(mydata.subset)[3:6] <- c("Sample","TPM","Biopsy","Hours")
+  #mydata.subset <- cbind(mydata.subset,str_split(mydata.subset$name,pattern="_", simplify = T))
+  colnames(mydata.subset)[2] <- c("CellType")
 
   return(mydata.subset)
 
