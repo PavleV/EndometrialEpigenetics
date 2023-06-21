@@ -14,13 +14,27 @@ ALL_avg_celltype_peaks_210923 <- read.delim("~/Documents/Rprojects/EndometrialEp
 
 #saveRDS(ALL_avg_celltype_peaks_210923,"./Data/ALL_avg_celltype_peaks.rds")
 
+Key.GRCh38.p13 <- read.delim("~/Documents/Rprojects/EndometrialEpigenetics/Data/Key.GRCh38.p13.txt")
+
+library(plyr)
+
+Key.GRCh38.p13$Strand <- mapvalues(Key.GRCh38.p13$Strand, from=c(1,-1), to=c("+","-"))
+
+Key.GRCh38.p13$Chromosome.scaffold.name[Key.GRCh38.p13$Chromosome.scaffold.name == "MT"] <- "M"
+
+Key.GRCh38.p13$Chromosome.scaffold.name[Key.GRCh38.p13$Chromosome.scaffold.name %in% c(1:23,"M","Y","X")] <- paste0("chr",Key.GRCh38.p13$Chromosome.scaffold.name[Key.GRCh38.p13$Chromosome.scaffold.name %in% c(1:23,"M","Y","X")])
+
+colnames(Key.GRCh38.p13) <- c("EnsemblID","Chromosome","Start","End","Strand","GeneName","Description")
+
+#saveRDS(Key.GRCh38.p13,"./Data/Key.GRCh38.p13.rds")
+
 ```
 
 ```{r}
 
 RNA_data_df <- readRDS("./Data/ALL_avg_celltype_RNA.rds")
 Peak_data_df <- readRDS("./Data/ALL_avg_celltype_peaks.rds")
-
+Key_GRCh38_p13_df <- readRDS("./Data/Key.GRCh38.p13.rds")
 
 ```
 
