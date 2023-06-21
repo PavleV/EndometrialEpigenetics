@@ -1,0 +1,29 @@
+---
+title: "DataProcess"
+output: html_document
+date: "2023-06-21"
+---
+
+```{r}
+
+ALL_avg_celltype_RNA_210923 <- read.delim("./Data/ALL_avg_celltype_RNA_210923.txt", row.names=1)
+
+#saveRDS(ALL_avg_celltype_RNA_210923,"./Data/ALL_avg_celltype_RNA.rds")
+
+ALL_avg_celltype_peaks_210923 <- read.delim("~/Documents/Rprojects/EndometrialEpigenetics/Data/ALL_avg_celltype_peaks_210923.txt", row.names=1)
+
+#saveRDS(ALL_avg_celltype_peaks_210923,"./Data/ALL_avg_celltype_peaks.rds")
+
+```
+
+```{r}
+
+RNA_data_df <- readRDS("./Data/ALL_avg_celltype_RNA.rds")
+Peak_data_df <- readRDS("./Data/ALL_avg_celltype_peaks.rds")
+
+
+```
+
+
+
+
